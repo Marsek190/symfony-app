@@ -13,8 +13,14 @@ class City
         $this->city = $city;
     }
 
-    public function getById(int $id): \Core\Entity\City
+    public function getById(int $id): ?\Core\Entity\Concat\City
     {
-        return $this->city->getById($id);
+        /**
+         * @var \Core\Entity\Concat\City $city
+         */
+        $city = $this->city->getById($id);
+        var_dump($city); die();
+
+        return $city;
     }
 }
