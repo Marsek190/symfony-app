@@ -1,0 +1,65 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    #locale: 'en'
+    #DATABASE_HOST: mysql
+    #DATABASE_USER: root
+    #DATABASE_PASSWORD:
+
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    Doctrine\DBAL\Connection:
+        factory:      Doctrine\DBAL\DriverManager::getConnection
+        arguments:
+            $params:
+                driver:   pdo_mysql
+                url:      '%env(DATABASE_URL)%'
+                charset:  UTF8
+    city.repository:
+        class: Front\Repository\City
+        arguments:
+            $em: "@doctrine.orm.entity_manager"
+    city.service:
+        class: Front\Service\City
+        arguments: ["@city.repository"]
+
+    country.repository:
+        class: Front\Repository\Country
+        arguments:
+            $em: "@doctrine.orm.entity_manager"
+    country.service:
+        class: Front\Service\Country
+        arguments: ["@country.repository"]
+
+    #city.controller:
+    #    class: Front\Controller\City
+    #    arguments: ["@city.service"]
+    #    tags: ['controller.service_arguments']
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/App/src/*'
+        exclude: '../src/App/src/{DependencyInjection,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    Front\Controller\:
+        resource: '../src/Front/src/Controller'
+        tags: ['controller.service_arguments']
+
+    Front\Controller\City:
+        arguments: ["@city.service"]
+        tags: ['controller.service_arguments']
+    Front\Controller\Country:
+        arguments: ["@country.service"]
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
