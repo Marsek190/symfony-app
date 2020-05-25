@@ -13,10 +13,10 @@ class Country
         $this->country = $country;
     }
 
-    public function getById(int $id): ?\Core\Entity\Concat\Country
+    public function getById(int $id): ?\Front\Entity\Country
     {
         /**
-         * @var \Core\Entity\Concat\Country $country
+         * @var \Front\Entity\Country $country
          */
         $country = $this->country->getById($id);
         var_dump($country); die();
