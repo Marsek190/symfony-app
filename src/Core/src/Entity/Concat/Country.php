@@ -5,6 +5,7 @@ namespace Core\Entity\Concat;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,21 +15,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Country extends \Core\Entity\Country
 {
     /**
-     * @ORM\ManyToMany(targetEntity="Core\Entity\City")
-     * @ORM\JoinTable(name="cities_countries",
-     *     joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="city_id", referencedColumnName="id", unique=true)}
-     * )
+     * @ORM\OneToMany(targetEntity="Core\Entity\Concat\City", mappedBy="country", fetch="LAZY", cascade={"ALL"})
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      */
-    protected ArrayCollection $cities;
+    protected Collection $cities;
     /**
-     * @ORM\ManyToMany(targetEntity="Core\Entity\Region")
-     * @ORM\JoinTable(name="cities_countries",
-     *     joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="region_id", referencedColumnName="id", unique=true)}
-     * )
+     * @ORM\OneToMany(targetEntity="Core\Entity\Concat\Region", mappedBy="country", fetch="LAZY", cascade={"ALL"})
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      */
-    protected ArrayCollection $regions;
+    protected Collection $regions;
 
     public function __construct()
     {
@@ -39,34 +34,34 @@ class Country extends \Core\Entity\Country
     /**
      * @return ArrayCollection
      */
-    public function getCities(): ArrayCollection
+    public function getCities(): Collection
     {
         return $this->cities;
     }
 
     /**
-     * @param ArrayCollection $cities
+     * @param Collection $cities
      * @return Country
      */
-    public function setCities(ArrayCollection $cities): Country
+    public function setCities(Collection $cities): Country
     {
         $this->cities = $cities;
         return $this;
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getRegions(): ArrayCollection
+    public function getRegions(): Collection
     {
         return $this->regions;
     }
 
     /**
-     * @param ArrayCollection $regions
+     * @param Collection $regions
      * @return Country
      */
-    public function setRegions(ArrayCollection $regions): Country
+    public function setRegions(Collection $regions): Country
     {
         $this->regions = $regions;
         return $this;

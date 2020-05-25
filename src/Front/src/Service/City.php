@@ -19,7 +19,7 @@ class City
          * @var \Core\Entity\Concat\City $city
          */
         $city = $this->city->getById($id);
-        var_dump($city); die();
+        var_dump($city->getCountry()); die();
 
         return $city;
     }

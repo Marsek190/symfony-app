@@ -15,12 +15,12 @@ use Doctrine\ORM\Mapping as ORM;
 class City extends \Core\Entity\City
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Core\Entity\Country", inversedBy="")
+     * @ORM\ManyToOne(targetEntity="Core\Entity\Concat\Country", inversedBy="cities")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      */
     protected Country $country;
     /**
-     * @ORM\ManyToOne(targetEntity="Core\Entity\Region", inversedBy="")
+     * @ORM\ManyToOne(targetEntity="Core\Entity\Concat\Region", inversedBy="cities")
      * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      */
     protected Region $region;

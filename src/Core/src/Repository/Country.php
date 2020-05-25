@@ -6,30 +6,16 @@ namespace Core\Repository;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 
-class Country
+class Country extends AbstractRepository
 {
-    protected Connection $connection;
-
-    protected EntityManager $em;
-
-    protected EntityRepository $repository;
-
     public function __construct(Connection $connection, EntityManager $em)
     {
-        $this->connection = $connection;
-        $this->em = $em;
-        $this->repository = $em->getRepository(\Core\Entity\Country::class);
+        parent::__construct($connection, $em);
     }
 
-    public function getById(int $id): ?\Core\Entity\Country
+    public function getObjectPrototype(): string
     {
-        /**
-         * @var \Core\Entity\Country|null $city
-         */
-        $country = $this->repository->find($id);
-        var_dump($country); die();
-        return $country;
+        return \Core\Entity\Country::class;
     }
 }

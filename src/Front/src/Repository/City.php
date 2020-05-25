@@ -31,7 +31,6 @@ class City extends AbstractRepository
 
         try {
             $query = $qb->getQuery();
-            //$query->setFetchMode(FetchMode::CUSTOM_OBJECT, $this->getObjectPrototype(), ClassMetadataInfo::FETCH_LAZY);
             return $query->getSingleResult();
         } catch (NoResultException $e) {
 
