@@ -3,14 +3,15 @@ declare(strict_types=1);
 
 namespace Front\Entity;
 
+
 use Doctrine\ORM\Mapping as ORM;
 use Front\Collection\ArrayList;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="country")
+ * @ORM\Table(name="region")
  */
-class Country extends \Core\Entity\Simplify\Country
+class Region extends \Core\Entity\Simplify\Region
 {
     /**
      * @ORM\Column(name="geo_x", type="float")
@@ -23,8 +24,6 @@ class Country extends \Core\Entity\Simplify\Country
 
     protected ArrayList $cities;
 
-    protected ArrayList $regions;
-
     /**
      * @return float
      */
@@ -35,9 +34,9 @@ class Country extends \Core\Entity\Simplify\Country
 
     /**
      * @param float $geoX
-     * @return Country
+     * @return Region
      */
-    public function setGeoX(float $geoX): Country
+    public function setGeoX(float $geoX): Region
     {
         $this->geoX = $geoX;
         return $this;
@@ -53,9 +52,9 @@ class Country extends \Core\Entity\Simplify\Country
 
     /**
      * @param float $geoY
-     * @return Country
+     * @return Region
      */
-    public function setGeoY(float $geoY): Country
+    public function setGeoY(float $geoY): Region
     {
         $this->geoY = $geoY;
         return $this;
@@ -71,29 +70,11 @@ class Country extends \Core\Entity\Simplify\Country
 
     /**
      * @param ArrayList $cities
-     * @return Country
+     * @return Region
      */
-    public function setCities(ArrayList $cities): Country
+    public function setCities(ArrayList $cities): Region
     {
         $this->cities = $cities;
-        return $this;
-    }
-
-    /**
-     * @return ArrayList
-     */
-    public function getRegions(): ArrayList
-    {
-        return $this->regions;
-    }
-
-    /**
-     * @param ArrayList $regions
-     * @return Country
-     */
-    public function setRegions(ArrayList $regions): Country
-    {
-        $this->regions = $regions;
         return $this;
     }
 }

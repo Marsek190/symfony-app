@@ -4,13 +4,24 @@ declare(strict_types=1);
 namespace Front\Service;
 
 
+use Front\Repository\Region;
+
 class Country
 {
     protected \Front\Repository\Country $country;
 
-    public function __construct(\Front\Repository\Country $country)
+    protected \Front\Repository\City $city;
+
+    protected Region $region;
+
+    public function __construct(
+        \Front\Repository\Country $country,
+        \Front\Repository\City $city,
+        Region $region)
     {
         $this->country = $country;
+        $this->city = $city;
+        $this->region = $region;
     }
 
     public function getById(int $id): ?\Front\Entity\Country
@@ -19,8 +30,9 @@ class Country
          * @var \Front\Entity\Country $country
          */
         $country = $this->country->getById($id);
-        var_dump($country); die();
+        $cities = $this->city->getAllByCountryId($id);
+        $regions = $this->region->getAllByCountryId($id);
 
-        return $country;
+        return $country->setCities($cities)->setRegions($regions);
     }
 }
